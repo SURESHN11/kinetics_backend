@@ -36,7 +36,7 @@ app.use('/api/library', libraryRoutes);
 // --- DATABASE BRIDGES (HYBRID ARCHITECTURE) ---
 
 // 1. PostgreSQL Database Bridge (For Users, Logs, and App Data)
-const pool = new Pool({
+/*const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
@@ -46,7 +46,7 @@ const pool = new Pool({
 
 pool.connect()
   .then(() => console.log('🔵 SUCCESS: Connected to PostgreSQL (User Data)'))
-  .catch(err => console.error('🔴 Postgres Connection Error:', err.stack));
+  .catch(err => console.error('🔴 Postgres Connection Error:', err.stack));*/
 
 // 2. MongoDB Atlas Bridge (The Centralized Biomechanics Vault)
 mongoose.connect(process.env.MONGO_URI)
