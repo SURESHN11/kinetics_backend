@@ -2,54 +2,44 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-// Temporary memory vault for OTPs
-const otpVault = new Map();
+// --- DEMO OVERRIDE: BYPASS POSTGRES & SMS FOR GYM TESTING ---
 
-// --- ROUTE 1: REQUEST SECURE CODE ---
-router.post('/request-otp', async (req, res) => {
-  const { phone } = req.body;
-  
-  if (!phone) {
-    return res.status(400).json({ error: "Mobile number is required." });
-  }
+// 1. Request Secure Code
+router.post('/request-otp', (req, res) => {
+    const { phone } = req.body;
+    
+    if (!phone || phone.length < 10) {
+        return res.status(400).json({ error: 'Valid phone number required' });
+    }
 
-  // Generate a mock 6-digit code. 
-  const otpCode = "123456"; 
-  otpVault.set(phone, otpCode);
-
-  // Print the receipt to the terminal
-  console.log(`\n=========================================`);
-  console.log(`[SECURE SMS] Send to +91 ${phone}`);
-  console.log(`[SECURE SMS] Code: ${otpCode}`);
-  console.log(`=========================================\n`);
-
-  res.json({ message: "Secure code dispatched." });
+    console.log(`🚀 [DEMO MODE] Overriding SMS. Fake OTP request logged for ${phone}`);
+    
+    // Instantly return success to the phone without sending a real text
+    res.status(200).json({ message: 'Override active. Code accepted.' });
 });
 
-// --- ROUTE 2: VERIFY CODE & LOGIN ---
-router.post('/verify-otp', async (req, res) => {
-  const { phone, code } = req.body;
+// 2. Verify Identity & Generate VIP Pass
+router.post('/verify-otp', (req, res) => {
+    const { phone, code } = req.body;
 
-  if (otpVault.get(phone) !== code) {
-    return res.status(401).json({ error: "Invalid or expired secure code." });
-  }
+    console.log(`🚀 [DEMO MODE] Bypassing PostgreSQL. Generating VIP token for ${phone}`);
 
-  otpVault.delete(phone);
+    // Generate a secure JWT using the secret we added to Railway earlier
+    const token = jwt.sign(
+        { 
+            userId: 'fitfuelhub_demo_user', 
+            phone: phone, 
+            role: 'founder' 
+        },
+        process.env.JWT_SECRET || 'Kinetics_FitFuelHub_Secure_Auth_Key_2026!*',
+        { expiresIn: '30d' } // Keeps the app logged in for 30 days
+    );
 
-  const vipPass = jwt.sign(
-    { phone: phone }, 
-    process.env.JWT_SECRET || 'fitfuelhub_super_secret_master_key_2026', 
-    { expiresIn: '30d' }
-  );
-
-  res.json({
-    message: "Identity verified. Welcome Athlete.",
-    token: vipPass,
-    user: {
-      phone: phone,
-      isPremium: false
-    }
-  });
+    // Smash the gate open
+    res.status(200).json({ 
+        token: token, 
+        message: 'Login successful' 
+    });
 });
 
 module.exports = router;
