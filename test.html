@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: #000; color: #fff; font-family: sans-serif; padding: 50px;">
+
+  <h2>FitFuelHub AI Vision Test</h2>
+  <p>Upload a clean-label meal to test the Gemini macro engine.</p>
+  
+  <input type="file" id="imageInput" accept="image/*" style="margin-bottom: 20px;">
+  <br>
+  <button onclick="testAI()" style="background-color: #D32B2C; color: white; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer;">
+    SEND TO AI
+  </button>
+
+  <pre id="result" style="color: #39854A; font-size: 18px; margin-top: 30px;"></pre>
+
+  <script>
+    async function testAI() {
+      const fileInput = document.getElementById('imageInput');
+      if (!fileInput.files[0]) return alert("Please select an image first!");
+
+      const formData = new FormData();
+      formData.append('mealImage', fileInput.files[0]);
+
+      document.getElementById('result').innerText = "Processing AI vision...";
+
+      try {
+        const response = await fetch('http://localhost:3000/api/fuel/parse', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('result').innerText = "Error: Make sure your Node.js server is running!";
+      }
+    }
+  </script>
+
+</body>
+</html>

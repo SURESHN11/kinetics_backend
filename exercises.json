@@ -1,0 +1,829 @@
+[
+  {
+  "exercise_id": "EX_001",
+  "name": "BACK_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 95.0,
+  "up_angle_threshold": 170.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftShoulder",
+  "joint2": "leftHip",
+  "joint3": "leftKnee",
+  "safe_min_angle": 50.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 250,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "KNEE_VALGUS",
+  "phase": "eccentric_down",
+  "math_condition": "abs(leftKnee.x - rightKnee.x) < abs(leftAnkle.x - rightAnkle.x) * 0.75",
+  "tts_audio": "Push your knees out.",
+  "priority": 1
+  },
+  {
+  "fault_id": "CHEST_COLLAPSE",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 50.0",
+  "tts_audio": "Keep your chest up.",
+  "priority": 1
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "hole_pause",
+  "math_condition": "leftHeel.y < leftFootIndex.y + 0.02",
+  "tts_audio": "Drive through your heels.",
+  "priority": 2
+  },
+  {
+  "fault_id": "SHALLOW_DEPTH",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftHip, leftKnee, leftAnkle) > 105.0",
+  "tts_audio": "Squat lower, hit parallel.",
+  "priority": 3
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Feet shoulder-width apart, barbell resting securely on traps, core tightly braced.",
+  "execution": "Break at hips and knees simultaneously. Descend until hips are below knees, then drive up.",
+  "common_fault": "Knees caving inwards and torso falling forward."
+  }
+  },
+  {
+  "exercise_id": "EX_002",
+  "name": "FRONT_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 90.0,
+  "up_angle_threshold": 170.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftWrist",
+  "joint2": "leftElbow",
+  "joint3": "leftShoulder",
+  "safe_min_angle": 45.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 250,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "ELBOW_DROP",
+  "phase": "eccentric_down",
+  "math_condition": "leftElbow.y > leftShoulder.y + 0.05",
+  "tts_audio": "Keep your elbows up high.",
+  "priority": 1
+  },
+  {
+  "fault_id": "TORSO_FLEXION",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 65.0",
+  "tts_audio": "Torso vertical, proud chest.",
+  "priority": 1
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "concentric_up",
+  "math_condition": "leftHeel.y < leftFootIndex.y",
+  "tts_audio": "Weight in the mid-foot and heels.",
+  "priority": 2
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Bar resting on front deltoids, loose fingertip grip, elbows pointing straight ahead.",
+  "execution": "Keep elbows extremely high while descending. Torso remains much more vertical than a back squat.",
+  "common_fault": "Dropping the elbows causing the upper back to round and drop the bar."
+  }
+  },
+  {
+  "exercise_id": "EX_003",
+  "name": "GOBLET_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 90.0,
+  "up_angle_threshold": 170.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftShoulder",
+  "joint2": "leftHip",
+  "joint3": "leftKnee",
+  "safe_min_angle": 60.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 300,
+  "cooldown_between_reps_ms": 800
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "WEIGHT_DRIFT",
+  "phase": "eccentric_down",
+  "math_condition": "abs(leftWrist.x - leftShoulder.x) > 0.15",
+  "tts_audio": "Keep the dumbbell close to your chest.",
+  "priority": 2
+  },
+  {
+  "fault_id": "SHALLOW_DEPTH",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftHip, leftKnee, leftAnkle) > 100.0",
+  "tts_audio": "Get your elbows inside your knees.",
+  "priority": 3
+  },
+  {
+  "fault_id": "KNEE_VALGUS",
+  "phase": "concentric_up",
+  "math_condition": "abs(leftKnee.x - rightKnee.x) < abs(leftHip.x - rightHip.x) * 0.8",
+  "tts_audio": "Drive knees outward on the way up.",
+  "priority": 1
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Hold the weight vertically against your chest, elbows tucked tight.",
+  "execution": "Squat straight down between your legs. Let your elbows track inside your kneecaps.",
+  "common_fault": "Letting the weight pull you forward onto your toes."
+  }
+  },
+  {
+  "exercise_id": "EX_004",
+  "name": "OVERHEAD_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 95.0,
+  "up_angle_threshold": 170.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftWrist",
+  "joint2": "leftShoulder",
+  "joint3": "leftHip",
+  "safe_min_angle": 150.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 250,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "ARM_FALL",
+  "phase": "eccentric_down",
+  "math_condition": "angle(leftWrist, leftShoulder, leftHip) < 160.0",
+  "tts_audio": "Push up into the bar, armpits forward.",
+  "priority": 1
+  },
+  {
+  "fault_id": "TORSO_LEAN",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 70.0",
+  "tts_audio": "Keep your chest tall.",
+  "priority": 1
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "hole_pause",
+  "math_condition": "leftHeel.y < leftFootIndex.y + 0.02",
+  "tts_audio": "Stay grounded, flat feet.",
+  "priority": 2
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Snatch grip width, bar locked out perfectly over the back of the neck.",
+  "execution": "Maintain active shoulders and push upward against the bar throughout the entire descent and ascent.",
+  "common_fault": "Losing shoulder stability causing the bar to drift forward over the toes."
+  }
+  },
+  {
+  "exercise_id": "EX_005",
+  "name": "BOX_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 100.0,
+  "up_angle_threshold": 170.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 1000,
+  "cooldown_between_reps_ms": 1500
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "ROCKING",
+  "phase": "hole_pause",
+  "math_condition": "abs(leftShoulder.x - leftHip.x) > 0.2",
+  "tts_audio": "Don't rock back on the box. Stay tight.",
+  "priority": 2
+  },
+  {
+  "fault_id": "BOUNCING",
+  "phase": "hole_pause",
+  "math_condition": "time_in_hole < 500",
+  "tts_audio": "Pause fully on the box. No bouncing.",
+  "priority": 2
+  },
+  {
+  "fault_id": "SHIN_ANGLE_FORWARD",
+  "phase": "eccentric_down",
+  "math_condition": "leftKnee.x > leftFootIndex.x",
+  "tts_audio": "Sit further back, keep shins vertical.",
+  "priority": 3
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Wider stance than normal, box set to parallel or slightly below.",
+  "execution": "Sit entirely backward onto the box, keeping the shins vertical. Pause completely, then explode up.",
+  "common_fault": "Crashing down onto the box or rocking backward to generate momentum."
+  }
+  },
+  {
+  "exercise_id": "EX_006",
+  "name": "SUMO_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 95.0,
+  "up_angle_threshold": 170.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 250,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "NARROW_STANCE",
+  "phase": "eccentric_down",
+  "math_condition": "abs(leftAnkle.x - rightAnkle.x) < abs(leftShoulder.x - rightShoulder.x) * 1.2",
+  "tts_audio": "Widen your stance.",
+  "priority": 3
+  },
+  {
+  "fault_id": "KNEE_VALGUS",
+  "phase": "hole_pause",
+  "math_condition": "abs(leftKnee.x - rightKnee.x) < abs(leftAnkle.x - rightAnkle.x) * 0.85",
+  "tts_audio": "Force your knees out hard.",
+  "priority": 1
+  },
+  {
+  "fault_id": "CHEST_FALL",
+  "phase": "concentric_up",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 55.0",
+  "tts_audio": "Keep your torso upright.",
+  "priority": 2
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Extremely wide stance, toes pointed outward.",
+  "execution": "Keep torso maximally vertical. Drop hips straight down between your heels.",
+  "common_fault": "Not driving the knees wide enough, causing the hips to shoot back."
+  }
+  },
+  {
+  "exercise_id": "EX_007",
+  "name": "BULGARIAN_SPLIT_SQUAT_LEFT",
+  "category": "Lunge",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 85.0,
+  "up_angle_threshold": 160.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 200,
+  "cooldown_between_reps_ms": 800
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "KNEE_SLAM",
+  "phase": "eccentric_down",
+  "math_condition": "rightKnee.y > leftAnkle.y + 0.05",
+  "tts_audio": "Control the descent, don't hit the floor.",
+  "priority": 1
+  },
+  {
+  "fault_id": "SHORT_STRIDE",
+  "phase": "hole_pause",
+  "math_condition": "leftKnee.x > leftFootIndex.x + 0.1",
+  "tts_audio": "Hop front foot forward.",
+  "priority": 2
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "concentric_up",
+  "math_condition": "leftHeel.y < leftFootIndex.y",
+  "tts_audio": "Drive through the front heel.",
+  "priority": 1
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Left foot flat on floor, right foot elevated behind you on a bench.",
+  "execution": "Drop your back knee straight down toward the floor. Keep 80% of weight on front leg.",
+  "common_fault": "Stance too narrow causing balance issues, or pushing off the back leg."
+  }
+  },
+  {
+  "exercise_id": "EX_008",
+  "name": "BULGARIAN_SPLIT_SQUAT_RIGHT",
+  "category": "Lunge",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "rightHip",
+  "joint2": "rightKnee",
+  "joint3": "rightAnkle",
+  "down_angle_threshold": 85.0,
+  "up_angle_threshold": 160.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "rightHip",
+  "x_axis_stability_node": "rightAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 200,
+  "cooldown_between_reps_ms": 800
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "KNEE_SLAM",
+  "phase": "eccentric_down",
+  "math_condition": "leftKnee.y > rightAnkle.y + 0.05",
+  "tts_audio": "Control the drop.",
+  "priority": 1
+  },
+  {
+  "fault_id": "SHORT_STRIDE",
+  "phase": "hole_pause",
+  "math_condition": "rightKnee.x < rightFootIndex.x - 0.1",
+  "tts_audio": "Adjust your front foot spacing.",
+  "priority": 2
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "concentric_up",
+  "math_condition": "rightHeel.y < rightFootIndex.y",
+  "tts_audio": "Front heel down.",
+  "priority": 1
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Right foot flat on floor, left foot elevated behind you.",
+  "execution": "Drop your back knee straight down toward the floor.",
+  "common_fault": "Losing core engagement and arching the lower back heavily."
+  }
+  },
+  {
+  "exercise_id": "EX_009",
+  "name": "PISTOL_SQUAT_LEFT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 70.0,
+  "up_angle_threshold": 160.0
+  },
+  "secondary_tracking": {
+  "joint1": "rightHip",
+  "joint2": "rightKnee",
+  "joint3": "rightAnkle",
+  "safe_min_angle": 150.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 200,
+  "cooldown_between_reps_ms": 1500
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "OPPOSITE_LEG_DROP",
+  "phase": "hole_pause",
+  "math_condition": "rightHeel.y > leftAnkle.y - 0.05",
+  "tts_audio": "Keep your extended leg up off the floor.",
+  "priority": 2
+  },
+  {
+  "fault_id": "SEVERE_SPINE_FLEXION",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 30.0",
+  "tts_audio": "Try to keep your chest up, avoid entirely collapsing.",
+  "priority": 3
+  },
+  {
+  "fault_id": "HEEL_LIFT_CRITICAL",
+  "phase": "eccentric_down",
+  "math_condition": "leftHeel.y < leftFootIndex.y",
+  "tts_audio": "Keep your squatting heel glued to the floor.",
+  "priority": 1
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Balance on the left foot, right leg extended straight out in front.",
+  "execution": "Squat as deep as possible on the left leg while keeping the right leg floating.",
+  "common_fault": "Heel lifting off the ground due to lack of ankle mobility."
+  }
+  },
+  {
+  "exercise_id": "EX_010",
+  "name": "PISTOL_SQUAT_RIGHT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "rightHip",
+  "joint2": "rightKnee",
+  "joint3": "rightAnkle",
+  "down_angle_threshold": 70.0,
+  "up_angle_threshold": 160.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "safe_min_angle": 150.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "rightHip",
+  "x_axis_stability_node": "rightAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 200,
+  "cooldown_between_reps_ms": 1500
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "OPPOSITE_LEG_DROP",
+  "phase": "hole_pause",
+  "math_condition": "leftHeel.y > rightAnkle.y - 0.05",
+  "tts_audio": "Keep your left leg raised.",
+  "priority": 2
+  },
+  {
+  "fault_id": "HEEL_LIFT_CRITICAL",
+  "phase": "eccentric_down",
+  "math_condition": "rightHeel.y < rightFootIndex.y",
+  "tts_audio": "Right heel flat on the floor.",
+  "priority": 1
+  },
+  {
+  "fault_id": "SHALLOW_DEPTH",
+  "phase": "concentric_up",
+  "math_condition": "angle(rightHip, rightKnee, rightAnkle) > 90.0",
+  "tts_audio": "Sink lower into the pistol.",
+  "priority": 3
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Balance on right foot, left leg extended forward.",
+  "execution": "Sink deep, keeping arms forward for counterbalance.",
+  "common_fault": "Losing balance side-to-side; grip the floor with your toes."
+  }
+  },
+  {
+  "exercise_id": "EX_011",
+  "name": "COSSACK_SQUAT_LEFT",
+  "category": "Lunge",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 80.0,
+  "up_angle_threshold": 160.0
+  },
+  "secondary_tracking": {
+  "joint1": "rightHip",
+  "joint2": "rightKnee",
+  "joint3": "rightAnkle",
+  "safe_min_angle": 160.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 300,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "STRAIGHT_LEG_BEND",
+  "phase": "hole_pause",
+  "math_condition": "angle(rightHip, rightKnee, rightAnkle) < 150.0",
+  "tts_audio": "Lock out your trailing leg.",
+  "priority": 2
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "eccentric_down",
+  "math_condition": "leftHeel.y < leftFootIndex.y",
+  "tts_audio": "Keep your squatting heel flat.",
+  "priority": 1
+  },
+  {
+  "fault_id": "TORSO_COLLAPSE",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 45.0",
+  "tts_audio": "Chest up, don't fold over.",
+  "priority": 2
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Ultra-wide stance. Shift weight entirely to the left leg.",
+  "execution": "Squat down on the left leg while rotating the right toes up to the ceiling.",
+  "common_fault": "Bending the trailing leg or rounding the back extensively."
+  }
+  },
+  {
+  "exercise_id": "EX_012",
+  "name": "COSSACK_SQUAT_RIGHT",
+  "category": "Lunge",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "rightHip",
+  "joint2": "rightKnee",
+  "joint3": "rightAnkle",
+  "down_angle_threshold": 80.0,
+  "up_angle_threshold": 160.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "safe_min_angle": 160.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "rightHip",
+  "x_axis_stability_node": "rightAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 300,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "STRAIGHT_LEG_BEND",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftHip, leftKnee, leftAnkle) < 150.0",
+  "tts_audio": "Keep your left leg perfectly straight.",
+  "priority": 2
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "eccentric_down",
+  "math_condition": "rightHeel.y < rightFootIndex.y",
+  "tts_audio": "Right heel stays on the ground.",
+  "priority": 1
+  },
+  {
+  "fault_id": "SHALLOW_DEPTH",
+  "phase": "hole_pause",
+  "math_condition": "angle(rightHip, rightKnee, rightAnkle) > 100.0",
+  "tts_audio": "Sink deeper into the hip.",
+  "priority": 3
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Ultra-wide stance. Shift weight to the right leg.",
+  "execution": "Squat down on the right leg, letting the left toes rotate upward.",
+  "common_fault": "Failing to externally rotate the straight leg."
+  }
+  },
+  {
+  "exercise_id": "EX_013",
+  "name": "JUMP_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 100.0,
+  "up_angle_threshold": 175.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 50,
+  "cooldown_between_reps_ms": 500
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "STIFF_LANDING",
+  "phase": "eccentric_down",
+  "math_condition": "angle(leftHip, leftKnee, leftAnkle) > 150.0",
+  "tts_audio": "Absorb the landing, bend your knees.",
+  "priority": 1
+  },
+  {
+  "fault_id": "LACK_OF_EXTENSION",
+  "phase": "concentric_up",
+  "math_condition": "angle(leftHip, leftKnee, leftAnkle) < 160.0",
+  "tts_audio": "Fully extend hips and knees in the air.",
+  "priority": 2
+  },
+  {
+  "fault_id": "KNEE_VALGUS",
+  "phase": "eccentric_down",
+  "math_condition": "abs(leftKnee.x - rightKnee.x) < abs(leftAnkle.x - rightAnkle.x) * 0.7",
+  "tts_audio": "Don't let your knees crash inward on landing.",
+  "priority": 1
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Athletic stance, feet shoulder-width.",
+  "execution": "Drop rapidly into a quarter/half squat and explode vertically. Land softly and immediately flow into the next rep.",
+  "common_fault": "Landing with straight legs, shifting all impact to the joints."
+  }
+  },
+  {
+  "exercise_id": "EX_014",
+  "name": "ZERCHER_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 95.0,
+  "up_angle_threshold": 170.0
+  },
+  "secondary_tracking": {
+  "joint1": "leftShoulder",
+  "joint2": "leftElbow",
+  "joint3": "leftWrist",
+  "safe_min_angle": 30.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 250,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "ELBOW_DROP",
+  "phase": "eccentric_down",
+  "math_condition": "leftElbow.y > leftHip.y",
+  "tts_audio": "Keep elbows up, don't rest them on your thighs.",
+  "priority": 2
+  },
+  {
+  "fault_id": "SEVERE_ROUNDING",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 45.0",
+  "tts_audio": "Fight the weight, chest tall.",
+  "priority": 1
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "hole_pause",
+  "math_condition": "leftHeel.y < leftFootIndex.y + 0.02",
+  "tts_audio": "Keep your heels planted.",
+  "priority": 2
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Hold the barbell in the crook of your elbows, hands clasped together.",
+  "execution": "Squat deep while maintaining immense core pressure to prevent the heavy anterior load from pulling you forward.",
+  "common_fault": "Spinal flexion due to the aggressive forward pull of the load."
+  }
+  },
+  {
+  "exercise_id": "EX_015",
+  "name": "PAUSE_SQUAT",
+  "category": "Squat",
+  "biomechanics_engine": {
+  "engine_type": "MULTI_JOINT",
+  "primary_tracking": {
+  "joint1": "leftHip",
+  "joint2": "leftKnee",
+  "joint3": "leftAnkle",
+  "down_angle_threshold": 95.0,
+  "up_angle_threshold": 170.0
+  },
+  "spatial_anchors": {
+  "y_axis_descent_node": "leftHip",
+  "x_axis_stability_node": "leftAnkle"
+  },
+  "rep_validation": {
+  "min_time_in_hole_ms": 2000,
+  "cooldown_between_reps_ms": 1000
+  }
+  },
+  "fault_triggers": [
+  {
+  "fault_id": "RUSHING_PAUSE",
+  "phase": "hole_pause",
+  "math_condition": "time_in_hole < 2000",
+  "tts_audio": "Hold the pause longer.",
+  "priority": 2
+  },
+  {
+  "fault_id": "RELAXING_IN_HOLE",
+  "phase": "hole_pause",
+  "math_condition": "angle(leftShoulder, leftHip, leftKnee) < 50.0",
+  "tts_audio": "Stay tight at the bottom, don't relax.",
+  "priority": 1
+  },
+  {
+  "fault_id": "HEEL_LIFT",
+  "phase": "concentric_up",
+  "math_condition": "leftHeel.y < leftFootIndex.y",
+  "tts_audio": "Push through the entire foot.",
+  "priority": 2
+  }
+  ],
+  "coaching_cues": {
+  "setup": "Standard squat setup.",
+  "execution": "Descend normally, halt all momentum at the bottom, stay braced for a full 2 seconds, then drive up.",
+  "common_fault": "Releasing core tension at the bottom of the squat to 'rest'."
+  }
+  }
+]
+ 
